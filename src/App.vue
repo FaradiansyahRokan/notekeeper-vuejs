@@ -11,6 +11,10 @@ const closeModal = () => {
 
 
 function saveMemo(){
+  if (!newMemo.value) {
+    alert("Please enter a note.");
+    return;
+  }
   memos.value.push({
     id: Date.now(),
     content: newMemo.value,
@@ -19,6 +23,10 @@ function saveMemo(){
 
   newMemo.value = "";
   showModal.value = false;
+
+}
+function deleteMemo(id) {
+  memos.value = memos.value.filter(memo => memo.id !== id);
 }
 </script>
 
@@ -37,6 +45,7 @@ function saveMemo(){
       <div v-else class="card-container">
         <div v-for="memo in memos" class="card">
           <p class="">{{ memo.content }}</p>
+          <button @click="deleteMemo(memo.id)" class="delete-btn">Delete</button>
           <p class="date">{{ memo.date }}</p>
         </div>
       </div>
